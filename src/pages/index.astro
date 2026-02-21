@@ -1,5 +1,9 @@
 ---
-const target = '/es-MX/';
+const language = async function getStaticPaths() {
+    return [{ params: { lang: "en-GB" } }, { params: { lang: "es-MX" } }];
+}
+const { lang } = Astro.params;
+const target = lang == 'es-MX' ? 'es-MX' : 'en-GB'
 ---
 
 <!doctype html>
