@@ -1,5 +1,4 @@
 ---
-const target = '/es-MX/';
 ---
 
 <!doctype html>
@@ -7,10 +6,22 @@ const target = '/es-MX/';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta http-equiv="refresh" content="0;url=/es-MX/" />
     <title>Redirecting…</title>
+    <script>
+      // Client-only detection and redirect: use navigator language to pick locale
+      (function () {
+        try {
+          var navLang = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+          var lang = /^es/i.test(navLang) ? 'es-MX' : 'en-GB';
+          // use replace so back button doesn't keep this redirect page
+          location.replace('/' + lang + '/');
+        } catch (e) {
+          location.replace('/es-MX/');
+        }
+      })();
+    </script>
   </head>
   <body>
-    <p>Redirecting to <a href={target}>/es-MX/</a></p>
+    <p>Redirecting… If you are not redirected, go to <a href="/es-MX/">/es-MX/</a></p>
   </body>
 </html>
