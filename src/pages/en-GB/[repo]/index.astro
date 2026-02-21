@@ -1,9 +1,9 @@
 ---
 import MainLayout from "@layouts/main-layout.astro";
 import { fetchRepositories } from "../../../services/githubService";
-import type { GitHubRepository } from "../../../types/github";
 import MediaCarousel from "@components/organisms/MediaCarousel";
 import type { MediaItem } from "src/types/MediaItem";
+import type { GitHubRepository } from "@types/github.ts";
 
 export async function getStaticPaths() {
     const repos = await fetchRepositories("Cesar-Plyed");
@@ -31,24 +31,16 @@ const media: MediaItem[] = [
 ---
 
 <MainLayout title={repo}>
-    <div class="min-h-screen flex flex-col items-center justify-start p-8">
+    <div class="flex flex-col items-center justify-start min-h-screen p-8 text-neutral-800 dark:bg-neutral-600 dark:text-neutral-50">
         <div
-            class="max-w-5xl w-full rounded-xl shadow-lg p-10
-               bg-neutral-50 text-neutral-900
-               dark:bg-neutral-900 dark:text-neutral-50
-               transition-colors duration-200"
+            class="w-full max-w-5xl p-10 transition-colors duration-200 shadow-lg rounded-xl bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
         >
-            <h1 class="text-3xl font-bold mb-6 text-balance">Repositorio: {repo}</h1>
+            <h1 class="mb-6 text-3xl font-bold text-balance">Repository: {repo}</h1>
 
             <div class="space-y-4">
                 <p class="text-lg text-neutral-700 dark:text-neutral-300">
-                    <span class="font-semibold">Descripción:</span>
+                    <span class="font-semibold">Description:</span>
                     {repoData.description}
-                </p>
-
-                <p class="text-lg text-neutral-700 dark:text-neutral-300">
-                    <span class="font-semibold">Lenguaje principal:</span>
-                    {repoData.name}
                 </p>
 
                 <p class="flex items-center gap-2 text-lg font-medium text-primary dark:text-color-accent-ice">⭐ Stars: {repoData.stargazers_count}</p>
@@ -56,9 +48,9 @@ const media: MediaItem[] = [
 
             <!-- Media carousel section -->
             <section class="mt-8">
-                <h2 class="text-2xl font-semibold mb-4">Galería</h2>
+                <h2 class="mb-4 text-2xl font-semibold">Galery (Not Works yet)</h2>
                 <!-- Hydrate the React carousel on the client -->
-                <MediaCarousel client:load media={media} />
+                <!-- <MediaCarousel client:load media={media} /> -->
             </section>
         </div>
     </div>

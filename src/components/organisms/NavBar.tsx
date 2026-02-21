@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { HamburgerButton } from '@components/atoms/buttons/HamburgerButton';
 
-interface NavbarProps {
+export interface NavbarProps {
   title?: string;
   className?: string;
+  lang?: string;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ title, className = '' }) => {
+export const Navbar: React.FC<NavbarProps> = ({ title, className = '', lang }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -58,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ title, className = '' }) => {
             {/* Logo/Title */}
             <div className="shrink-0">
               <a
-                href="/"
+                href={lang === 'en-GB' ? '/en-GB/' : '/es-MX/'}
                 className="text-2xl font-semibold tracking-tight transition-colors duration-200 text-neutral-900 dark:text-neutral-50 hover:text-primary dark:hover:text-primary"
               >
                 {title}

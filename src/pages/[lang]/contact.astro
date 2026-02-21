@@ -1,0 +1,72 @@
+---
+import MainLayout from "@layouts/main-layout.astro";
+import Title from "@components/atoms/text/title.astro";
+import Paragraph from "@components/atoms/text/paragraph.astro";
+import en from "../../locales/en-GB.json";
+import es from "../../locales/es-MX.json";
+
+export async function getStaticPaths() {
+    return [{ params: { lang: "en-GB" } }, { params: { lang: "es-MX" } }];
+}
+
+const { lang } = Astro.params;
+const i18n = lang === "es-MX" ? es : en;
+const title = i18n["contact.title"];
+
+const { size = "base", muted = false, class: className = "" } = Astro.props;
+
+const sizeClasses = {
+    sm: "text-sm",
+    base: "text-base",
+    lg: "text-lg",
+};
+
+const colorClasses = muted
+    ? "text-neutral-500 dark:text-neutral-400"
+    : "text-neutral-700 dark:text-neutral-200";
+
+const baseClasses = "leading-relaxed";
+---
+
+<MainLayout title={title} lang={lang}>
+    <div class="max-w-5xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
+        <Title class="mb-4">{i18n["contact.title"]}</Title>
+        <ul>
+            <li>
+                <a
+                    href="https://www.linkedin.com/in/cesar-casta%C3%B1eda-l%C3%B3pez-24053b363/"
+                    target="_blank"
+                    class:list={[
+                        baseClasses,
+                        sizeClasses[size],
+                        colorClasses,
+                        className,
+                    ]}>Linkedin</a
+                >
+            </li>
+            <li>
+                <a
+                    href="https://wa.me/524401860158"
+                    target="_blank"
+                    class:list={[
+                        baseClasses,
+                        sizeClasses[size],
+                        colorClasses,
+                        className,
+                    ]}>(+52) 440 186 0158</a
+                >
+            </li>
+            <li>
+                <a
+                    href="mailto:cesar.plyed@gmail.com"
+                    class:list={[
+                        baseClasses,
+                        sizeClasses[size],
+                        colorClasses,
+                        className,
+                    ]}>cesar.plyed@gmail.com</a
+                >
+            </li>
+        </ul>
+    </div>
+</MainLayout>

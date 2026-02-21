@@ -1,0 +1,14 @@
+{
+  "home": {
+    "title": "My portfolio",
+    "subtitle": "Welcome to my portfolio",
+    "description": "On this page you'll see all my GitHub repositories",
+    "title2": " Repositories"
+  },
+
+  "about.title": "About Me",
+  "about.description": "Full-Stack Developer | Passionate about Microservices & Scalable Solutions: I am a Full-Stack Developer focused on building efficient and secure digital products. My most significant achievement is developing a Role-Based Dashboard using a microservices architecture, which allowed for better data management and system security. I have experience with a wide tech stack including Java, PHP, C#, and JavaScript, working with frameworks like React, Angular, and Laravel. I enjoy solving complex problems using Agile methodologies (Scrum) and integrating AI tools to optimize development workflows. Currently looking for my next challenge as a Junior Full-Stack Developer to contribute to innovative projects and continue growing professionally.",
+
+  "contact.title": "Contact",
+  "contact.description": "Get in touch."
+}

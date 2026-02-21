@@ -10,10 +10,13 @@
         "src/layouts/*"
       ],
       "@types/*": [
-        "src/types/"
+        "src/types/*"
       ],
       "@service/*": [
         "src/service/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
       ]
     },
     "plugins": [

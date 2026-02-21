@@ -13,7 +13,7 @@ export default defineConfig({
 
     i18n: {
         // Define supported languages using standard language codes (e.g., 'en', 'fr', 'zh-cn')
-        locales: ["en", "fr", "es"],
+        locales: ["en", "es"],
 
         // Set the default language (fallback for missing translations)
         defaultLocale: "en",

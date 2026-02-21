@@ -1,14 +1,13 @@
-// Initialize theme to avoid FOUC: add `dark` class when appropriate
 ;(function () {
-    try {
-        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var stored = localStorage.getItem("theme");
-        if (stored === "dark" || (!stored && prefersDark)) {
+        try {
+          var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var stored = localStorage.getItem("theme");
+          if (stored === "dark" || (!stored && prefersDark)) {
             document.documentElement.classList.add("dark");
-        } else {
+          } else {
             document.documentElement.classList.remove("dark");
+          }
+        } catch (e) {
+          // ignore
         }
-    } catch (e) {
-        // ignore errors (e.g., localStorage not available)
-    }
-})();
+      })();
