@@ -1,24 +1,45 @@
 ---
-
-import type { GitHubRepository } from "src/types/github";
+import type { GitHubRepository } from "@types/github.d.ts";
 import { fetchRepositories } from "../../services/githubService";
 import ProjectCard from "../atoms/cards/ProjectCard";
+
+//laguage
+import en from "../../locales/en-GB.json";
+import es from "../../locales/es-MX.json";
 
 // Fetch repositories from GitHub and display them
 const repositories = await fetchRepositories("Cesar-Plyed");
 const repos: GitHubRepository[] = repositories as GitHubRepository[];
+
+interface Props {}
+
+export async function getStaticPaths() {
+    return [{ params: { lang: "en-GB" } }, { params: { lang: "es-MX" } }];
+}
+
+const { lang } = Astro.params;
+const i18n = lang === "es-MX" ? es : en;
+
+const title2 = i18n.home.title2;
 ---
+
 <div class="w-full">
-  {repos.length > 0 ? (
+    {
+        repos.length > 0 ? (
             <section class="space-y-6">
-                <h2 class="text-3xl font-bold text-(--color-neutral-900) dark:text-(--color-neutral-100)">GitHub Repositories</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <h2 class="text-3xl font-bold text-(--color-neutral-900) dark:text-(--color-neutral-100)">
+                    GitHub {title2}
+                </h2>
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {repos.map((repo) => (
                         <ProjectCard client:load repo={repo} />
                     ))}
                 </div>
             </section>
         ) : (
-            <p class="text-(--color-neutral-600) dark:text-(--color-neutral-400)">No repositories found.</p>
-        )}
+            <p class="text-(--color-neutral-600) dark:text-(--color-neutral-400)">
+                No repositories found.
+            </p>
+        )
+    }
 </div>

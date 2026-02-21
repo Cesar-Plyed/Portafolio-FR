@@ -1,4 +1,4 @@
-import type { GitHubRepository } from "../types/github";
+import type { GitHubRepository } from "../types/github.ts";
 
 // Helper function to handle potential errors
 export function getErrorMessage(error: unknown): string {

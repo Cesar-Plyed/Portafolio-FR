@@ -1,0 +1,43 @@
+---
+import MainLayout from "@layouts/main-layout.astro";
+import Title from "@components/atoms/text/title.astro";
+import Paragraph from "@components/atoms/text/paragraph.astro";
+import en from "../../locales/en-GB.json";
+import es from "../../locales/es-MX.json";
+import ListProyects from "@components/cells/list-proyects.astro";
+
+export async function getStaticPaths() {
+    return [{ params: { lang: "en-GB" } }, { params: { lang: "es-MX" } }];
+}
+
+const { lang } = Astro.params;
+const i18n = lang === "es-MX" ? es : en;
+const title = i18n.home.title;
+const subtitle = i18n.home.subtitle;
+const description = i18n.home.description;
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body class="overflow-x-hidden dark:bg-black">
+        <MainLayout title={title}>
+            <div class="max-w-5xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
+                <Title class="mb-6">{subtitle}</Title>
+                <Paragraph class="mb-4">
+                    {description}
+                </Paragraph>
+
+                <div class="mt-12 space-y-8">
+                    <ListProyects />
+                </div>
+            </div>
+        </MainLayout>
+    </body>
+</html>

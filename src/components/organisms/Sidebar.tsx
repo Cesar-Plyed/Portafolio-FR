@@ -11,12 +11,22 @@ interface NavItem {
   icon?: string;
 }
 
-const navItems: NavItem[] = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Contact', href: '/contact' },
-];
+const getNavItems = (langPrefix: string): NavItem[] => {
+  if (langPrefix === '/es-MX') {
+    return [
+      { label: 'Inicio', href: `${langPrefix}/` },
+      { label: 'Acerca de Mi', href: `${langPrefix}/about` },
+      { label: 'Contacto', href: `${langPrefix}/contact` },
+    ];
+  }
+
+  // default en-GB
+  return [
+    { label: 'Home', href: `${langPrefix}/` },
+    { label: 'About Me', href: `${langPrefix}/about` },
+    { label: 'Contact', href: `${langPrefix}/contact` },
+  ];
+};
 
 export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,12 +57,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
     window.dispatchEvent(new CustomEvent('sidebar-toggle', { detail: { isOpen: false } }));
   };
 
+  // derive language prefix from current location (client-side)
+  const [langPrefix, setLangPrefix] = useState('/es-MX');
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path.startsWith('/en-GB')) setLangPrefix('/en-GB');
+    else if (path.startsWith('/es-MX')) setLangPrefix('/es-MX');
+    else setLangPrefix('/es-MX');
+  }, []);
+
+  const navItems = getNavItems(langPrefix);
+
   return (
     <>
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 transition-opacity duration-300"
+          className="fixed inset-0 z-40 transition-opacity duration-300 bg-black/40 backdrop-blur-xs"
           onClick={handleOverlayClick}
           aria-hidden="true"
         />
@@ -74,14 +96,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 overflow-y-auto p-4 scrollbar-hidden">
+          <nav className="flex-1 p-4 overflow-y-auto scrollbar-hidden">
             {/* Using same classes as configured Ul component (variant='minimal') */}
-            <ul className="list-none space-y-1">
+            <ul className="space-y-1 list-none">
               {navItems.map((item) => (
                 /* Using same classes as configured Li component (interactive=true) */
                 <li 
                   key={item.href}
-                  className="text-neutral-700 dark:text-neutral-200 transition-colors duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/50 cursor-pointer rounded-sm px-3 py-2"
+                  className="px-3 py-2 transition-colors duration-200 rounded-sm cursor-pointer text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/50"
                 >
                   <a
                     href={item.href}

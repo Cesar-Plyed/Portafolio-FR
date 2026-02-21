@@ -1,0 +1,25 @@
+---
+import MainLayout from "@layouts/main-layout.astro";
+import Title from "@components/atoms/text/title.astro";
+import Paragraph from "@components/atoms/text/paragraph.astro";
+import en from "../../locales/en-GB.json";
+import es from "../../locales/es-MX.json";
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en-GB' } },
+    { params: { lang: 'es-MX' } },
+  ];
+}
+
+const { lang } = Astro.params;
+const i18n = lang === 'es-MX' ? es : en;
+const title = i18n['about.title'];
+---
+
+<MainLayout title={title} lang={lang}>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <Title class="mb-4">{i18n['about.title']}</Title>
+    <Paragraph>{i18n['about.description']}</Paragraph>
+  </div>
+</MainLayout>

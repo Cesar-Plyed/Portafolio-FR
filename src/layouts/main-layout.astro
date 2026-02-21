@@ -1,8 +1,9 @@
 ---
 export interface Props {
     title?: string;
+    lang?: string;
 }
-const { title } = Astro.props;
+const { title, lang = "en-GB" } = Astro.props;
 
 import { Sidebar } from "@components/organisms/Sidebar";
 import { Navbar } from "@components/organisms/NavBar";
@@ -10,31 +11,31 @@ import "../styles/global.css";
 ---
 
 <!doctype html>
-<head>
-    <meta charset="UTF-8" />
-</head>
-<html lang="en">
+<html lang={lang} class="overflow-x-hidden dark:bg-black">
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{title}</title>
-        <script src="../shared/windows-theme.js"></script>
+        <!-- Load shared script that detects system language and theme + redirects root -->
+        <script src="../shared/languageDetector.ts" />
     </head>
-    <body>
+    <body class="grid grid-cols-1 grid-rows-[64px_auto_64px] dark:bg-black h-screen">
         {/* Navbar with scroll animations */}
-        <Navbar title={title} client:load />
+        <Navbar title={title} lang={lang} client:load className="row-start-1 row-end-2"/>
 
         {/* Sidebar navigation */}
         <Sidebar client:load />
 
         {/* Main content with top padding to account for fixed navbar */}
-        <main class="pt-16">
+        <main class="pt-16" class="row-start-2 row-end-3">
             <slot />
         </main>
 
         <footer
-            class="border-t border-neutral-200 dark:border-neutral-700 py-6 px-4 w-screen"
+            class="w-screen row-start-3 row-end-4 px-4 py-6 border-t max-h border-neutral-200 dark:border-neutral-700 max-h-24"
         >
             <p
-                class="text-center text-sm text-neutral-500 dark:text-neutral-400"
+                class="text-sm text-center text-neutral-500 dark:text-neutral-400"
             >
                 {title}
             </p>

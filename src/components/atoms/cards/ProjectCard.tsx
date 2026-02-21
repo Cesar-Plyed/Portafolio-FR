@@ -1,9 +1,9 @@
 import { Star, ExternalLink } from "lucide-react";
-import type { GitHubRepository } from "../../../types/github";
+import type { GitHubRepository } from "../../../types/github.ts";
 import PrimaryButton from "../buttons/PrimaryButton";
 import SecondaryButton from "../buttons/SecondaryButton";
 import { getRelativeLocaleUrl } from 'astro:i18n';
-
+import detectLanguage from '@shared/languageDetector';
 
 
 interface ProjectCardProps {
@@ -18,11 +18,17 @@ export default function ProjectCard({ repo }: ProjectCardProps) {
         <article className="group relative flex flex-col gap-4 p-6 bg-white dark:bg-(--color-dark-surface) rounded-lg border border-(--color-neutral-200) dark:border-(--color-neutral-800) shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
             {/* Header */}
             <div className="flex items-start justify-between gap-3">
-                <SecondaryButton onClick={
-                    () => {
-                        document.location.href = getRelativeLocaleUrl("es", `${repo.name}`)
+                <SecondaryButton className="max-w-48" onClick={() => {
+                    // detect the user's language and navigate to the repo page under that locale
+                    try {
+                        const lang = (typeof window !== 'undefined') ? detectLanguage() : 'en-GB';
+                        // navigate to /{lang}/{repo.name}
+                        document.location.href = `/${lang}/${repo.name}`;
+                    } catch (e) {
+                        // fallback
+                        document.location.href = `/en-GB/${repo.name}`;
                     }
-                }>
+                }}>
                     <h3 className="text-xl font-semibold text-(--color-neutral-900) dark:text-(--color-neutral-100) group-hover:text-(--color-primary) transition-colors duration-200">
                         {repo.name}
                     </h3>
@@ -45,7 +51,7 @@ export default function ProjectCard({ repo }: ProjectCardProps) {
             </div>
 
             {/* Description */}
-            <p className="text-sm text-(--color-neutral-600) dark:text-(--color-neutral-400) line-clamp-2 flex-grow">
+            <p className="text-sm text-(--color-neutral-600) dark:text-(--color-neutral-400) line-clamp-2 grow">
                 {repo.description || "No description available"}
             </p>
 
