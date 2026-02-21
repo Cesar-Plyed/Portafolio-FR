@@ -1,0 +1,65 @@
+---
+import MainLayout from "@layouts/main-layout.astro";
+import { fetchRepositories } from "../../../services/githubService";
+import type { GitHubRepository } from "../../../types/github";
+import MediaCarousel from "@components/organisms/MediaCarousel";
+import type { MediaItem } from "src/types/MediaItem";
+
+export async function getStaticPaths() {
+    const repos = await fetchRepositories("Cesar-Plyed");
+
+    if (repos instanceof Error) {
+        console.error(repos.message);
+        return [];
+    }
+
+    return repos.map((repo: GitHubRepository) => ({
+        params: { repo: repo.name },
+        props: { repo },
+    }));
+}
+
+const { repo } = Astro.params;
+const { repo: repoData } = Astro.props;
+
+const media: MediaItem[] = [
+    { type: "video", src: "https://www.w3schools.com/html/mov_bbb.mp4", alt: "Demo video" },
+    { type: "image", src: "https://via.placeholder.com/1200x600?text=Imagen+1", alt: "Imagen 1" },
+    { type: "image", src: "https://via.placeholder.com/1200x600?text=Imagen+2", alt: "Imagen 2" },
+    { type: "image", src: "https://via.placeholder.com/1200x600?text=Imagen+3", alt: "Imagen 3" },
+];
+---
+
+<MainLayout title={repo}>
+    <div class="min-h-screen flex flex-col items-center justify-start p-8">
+        <div
+            class="max-w-5xl w-full rounded-xl shadow-lg p-10
+               bg-neutral-50 text-neutral-900
+               dark:bg-neutral-900 dark:text-neutral-50
+               transition-colors duration-200"
+        >
+            <h1 class="text-3xl font-bold mb-6 text-balance">Repositorio: {repo}</h1>
+
+            <div class="space-y-4">
+                <p class="text-lg text-neutral-700 dark:text-neutral-300">
+                    <span class="font-semibold">Descripción:</span>
+                    {repoData.description}
+                </p>
+
+                <p class="text-lg text-neutral-700 dark:text-neutral-300">
+                    <span class="font-semibold">Lenguaje principal:</span>
+                    {repoData.name}
+                </p>
+
+                <p class="flex items-center gap-2 text-lg font-medium text-primary dark:text-color-accent-ice">⭐ Stars: {repoData.stargazers_count}</p>
+            </div>
+
+            <!-- Media carousel section -->
+            <section class="mt-8">
+                <h2 class="text-2xl font-semibold mb-4">Galería</h2>
+                <!-- Hydrate the React carousel on the client -->
+                <MediaCarousel client:load media={media} />
+            </section>
+        </div>
+    </div>
+</MainLayout>

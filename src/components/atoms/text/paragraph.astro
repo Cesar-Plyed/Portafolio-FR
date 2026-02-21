@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+  size?: 'sm' | 'base' | 'lg';
+  muted?: boolean;
+}
+
+const { 
+  size = 'base',
+  muted = false,
+  class: className = ''
+} = Astro.props;
+
+const sizeClasses = {
+  'sm': 'text-sm',
+  'base': 'text-base',
+  'lg': 'text-lg'
+};
+
+const colorClasses = muted 
+  ? 'text-neutral-500 dark:text-neutral-400' 
+  : 'text-neutral-700 dark:text-neutral-200';
+
+const baseClasses = "leading-relaxed";
+---
+
+<p class:list={[baseClasses, sizeClasses[size], colorClasses, className]}>
+  <slot />
+</p>

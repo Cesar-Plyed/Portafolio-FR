@@ -1,0 +1,24 @@
+---
+
+import type { GitHubRepository } from "src/types/github";
+import { fetchRepositories } from "../../services/githubService";
+import ProjectCard from "../atoms/cards/ProjectCard";
+
+// Fetch repositories from GitHub and display them
+const repositories = await fetchRepositories("Cesar-Plyed");
+const repos: GitHubRepository[] = repositories as GitHubRepository[];
+---
+<div class="w-full">
+  {repos.length > 0 ? (
+            <section class="space-y-6">
+                <h2 class="text-3xl font-bold text-(--color-neutral-900) dark:text-(--color-neutral-100)">GitHub Repositories</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {repos.map((repo) => (
+                        <ProjectCard client:load repo={repo} />
+                    ))}
+                </div>
+            </section>
+        ) : (
+            <p class="text-(--color-neutral-600) dark:text-(--color-neutral-400)">No repositories found.</p>
+        )}
+</div>

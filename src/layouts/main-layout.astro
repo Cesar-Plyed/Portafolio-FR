@@ -1,0 +1,43 @@
+---
+export interface Props {
+    title?: string;
+}
+const { title } = Astro.props;
+
+import { Sidebar } from "@components/organisms/Sidebar";
+import { Navbar } from "@components/organisms/NavBar";
+import "../styles/global.css";
+---
+
+<!doctype html>
+<head>
+    <meta charset="UTF-8" />
+</head>
+<html lang="en">
+    <head>
+        <title>{title}</title>
+        <script src="../shared/windows-theme.js"></script>
+    </head>
+    <body>
+        {/* Navbar with scroll animations */}
+        <Navbar title={title} client:load />
+
+        {/* Sidebar navigation */}
+        <Sidebar client:load />
+
+        {/* Main content with top padding to account for fixed navbar */}
+        <main class="pt-16">
+            <slot />
+        </main>
+
+        <footer
+            class="border-t border-neutral-200 dark:border-neutral-700 py-6 px-4 w-screen"
+        >
+            <p
+                class="text-center text-sm text-neutral-500 dark:text-neutral-400"
+            >
+                {title}
+            </p>
+        </footer>
+    </body>
+</html>
