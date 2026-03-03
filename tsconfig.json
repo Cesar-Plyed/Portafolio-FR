@@ -9,7 +9,7 @@
       "@layouts/*": [
         "src/layouts/*"
       ],
-      "@types/*": [
+      "@typings/*": [
         "src/types/*"
       ],
       "@service/*": [

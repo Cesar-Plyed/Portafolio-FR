@@ -1,9 +1,9 @@
 ---
-import type { GitHubRepository } from "../../types/github.d.ts";
+import type { GitHubRepository } from "../../types/Github";
 import { fetchRepositories } from "../../services/githubService";
 import ProjectCard from "../atoms/cards/ProjectCard";
-import ListProyectsClient from './ListProyectsClient';
-import UpdateRepositoryes from '../atoms/buttons/UpdateRepositoryes';
+import ListProyectsClient from "./ListProyectsClient";
+import UpdateRepositoryes from "../atoms/buttons/UpdateRepositoryes";
 
 //laguage
 import en from "../../locales/en-GB.json";
@@ -32,10 +32,10 @@ const title2 = i18n.home.title2;
                 <h2 class="text-3xl font-bold text-(--color-neutral-900) dark:text-(--color-neutral-100)">
                     GitHub {title2}
                 </h2>
-                    <div class="flex items-center justify-between">
-                        <UpdateRepositoryes client:load />
-                    </div>
-                    <ListProyectsClient client:load initialRepos={repos} />
+                <div class="flex items-center justify-between">
+                    <UpdateRepositoryes client:load />
+                </div>
+                <ListProyectsClient client:load initialRepos={repos} />
             </section>
         ) : (
             <p class="text-(--color-neutral-600) dark:text-(--color-neutral-400)">

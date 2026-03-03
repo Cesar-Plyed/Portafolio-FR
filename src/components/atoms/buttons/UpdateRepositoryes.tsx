@@ -3,7 +3,7 @@ import SecondaryButton from './SecondaryButton';
 import { fetchRepositories } from 'src/services/githubService';
 
 type BaseProps = {
-  children: ReactNode;
+  children?: ReactNode;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'outline' | 'ghost' | 'subtle';
   className?: string;
