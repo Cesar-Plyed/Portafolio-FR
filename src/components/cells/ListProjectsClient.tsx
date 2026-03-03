@@ -6,7 +6,7 @@ type Props = {
   initialRepos?: GitHubRepository[];
 };
 
-export default function ListProyectsClient({ initialRepos = [] }: Props) {
+export default function ListProjectsClient({ initialRepos = [] }: Props) {
   const [repos, setRepos] = useState<GitHubRepository[]>(initialRepos || []);
 
   useEffect(() => {
