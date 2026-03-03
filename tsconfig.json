@@ -13,7 +13,7 @@
         "src/types/*"
       ],
       "@service/*": [
-        "src/service/*"
+        "src/services/*"
       ],
       "@shared/*": [
         "src/shared/*"

@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Star, ExternalLink } from "lucide-react";
-import type { GitHubRepository } from "../../../types/Github";
 import PrimaryButton from "../buttons/PrimaryButton";
 import SecondaryButton from "../buttons/SecondaryButton";
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import detectLanguage from '@shared/languageDetector';
 import { fetchRepositoryLanguages } from "src/services/githubService";
 import { Icon } from "@iconify/react";
 import { languageIcons } from "@typings/languageIcons";
+import type { GitHubRepository } from "@typings/Github";
 
 interface ProjectCardProps {
     repo: GitHubRepository;
