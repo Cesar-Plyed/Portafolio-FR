@@ -1,3 +1,4 @@
+import SecondaryButton from '@components/atoms/buttons/SecondaryButton';
 import ProjectCard from '@components/atoms/cards/ProjectCard';
 import type { GitHubRepository } from '@typings/Github';
 import React, { useEffect, useState } from 'react'
@@ -49,7 +50,13 @@ export const FavoriteProjects = ({ favoriteNames }: FavoriteProjectsProps) => {
         : repos;
 
     if (filtered.length === 0) {
-        return <p className="text-sm text-(--color-neutral-600) dark:text-(--color-neutral-400)">No favorites yet.</p>;
+        return <div className="w-full grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 place-items-center">
+            {filtered.map((repo) => (
+                <SecondaryButton>
+                    {repo.name}
+                </SecondaryButton>
+            ))}
+        </div>
     }
 
     return (
