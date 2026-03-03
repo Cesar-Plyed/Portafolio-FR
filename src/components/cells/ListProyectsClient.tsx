@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProjectCard from '../atoms/cards/ProjectCard';
-import type { GitHubRepository } from '../../../types/github.d.ts';
+import type { GitHubRepository } from '@typings/Github';
 
 type Props = {
   initialRepos?: GitHubRepository[];

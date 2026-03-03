@@ -5,6 +5,7 @@ import Paragraph from "@components/atoms/text/paragraph.astro";
 import en from "../../locales/en-GB.json";
 import es from "../../locales/es-MX.json";
 import ListProyects from "@components/cells/list-proyects.astro";
+import { FavoriteProjects } from "@components/cells/FavoriteProjects";
 
 export async function getStaticPaths() {
     return [{ params: { lang: "en-GB" } }, { params: { lang: "es-MX" } }];
@@ -33,6 +34,17 @@ const description = i18n.home.description;
                 <Paragraph class="mb-4">
                     {description}
                 </Paragraph>
+
+                <!-- favorites are purely client‑side since they rely on fetch/useEffect -->
+                <section class="mb-8 space-y-6">
+                    <h2 class="text-2xl font-semibold dark:text-white">
+                        {i18n.home.favoritesTitle || "Favorites"}
+                    </h2>
+                    <FavoriteProjects
+                        client:load
+                        favoriteNames={["XDJA", "ExploteFuit", "Role-Based-Dashboard"]}
+                    />
+                </section>
 
                 <div class="mt-12 space-y-8">
                     <ListProyects />

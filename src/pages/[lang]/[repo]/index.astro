@@ -1,0 +1,62 @@
+---
+import MainLayout from "@layouts/main-layout.astro";
+import { fetchRepositories } from "../../../services/githubService";
+import type { GitHubRepository } from "@typings/Github";
+
+export async function getStaticPaths() {
+    const repos = await fetchRepositories("Cesar-Plyed");
+
+    if (repos instanceof Error) {
+        console.error(repos.message);
+        return [];
+    }
+
+    const langs = ["en-GB", "es-MX"];
+
+    return langs.flatMap((lang) =>
+        repos.map((repo: GitHubRepository) => ({
+            params: { lang, repo: repo.name },
+            props: { repo },
+        })),
+    );
+}
+
+const { lang, repo } = Astro.params;
+const { repo: repoData } = Astro.props;
+---
+
+<MainLayout title={repo}>
+    <div
+        class="flex flex-col items-center justify-start min-h-screen p-8 text-neutral-800 dark:bg-neutral-600 dark:text-neutral-50"
+    >
+        <div
+            class="w-full max-w-5xl p-10 transition-colors duration-200 shadow-lg rounded-xl bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
+        >
+            <h1 class="mb-6 text-3xl font-bold text-balance">
+                Repository: {repo}
+            </h1>
+
+            <div class="space-y-4">
+                <p class="text-lg text-neutral-700 dark:text-neutral-300">
+                    <span class="font-semibold">Description:</span>
+                    {repoData.description}
+                </p>
+
+                <p
+                    class="flex items-center gap-2 text-lg font-medium text-primary dark:text-color-accent-ice"
+                >
+                    Stars: {repoData.stargazers_count}
+                </p>
+            </div>
+
+            <!-- Media carousel section -->
+            <section class="mt-8">
+                <h2 class="mb-4 text-2xl font-semibold">
+                    Galery (Not Works yet)
+                </h2>
+                <!-- Hydrate the React carousel on the client -->
+                <!-- <MediaCarousel client:load media={media} /> -->
+            </section>
+        </div>
+    </div>
+</MainLayout>

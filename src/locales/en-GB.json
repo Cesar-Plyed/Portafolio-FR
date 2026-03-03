@@ -3,7 +3,8 @@
     "title": "My portfolio",
     "subtitle": "Welcome to my portfolio",
     "description": "On this page you'll see all my GitHub repositories",
-    "title2": " Repositories"
+    "title2": " Repositories",
+    "favoritesTitle": "This are my favorite repositoryes"
   },
 
   "about.title": "About Me",
