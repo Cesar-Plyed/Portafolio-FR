@@ -11,9 +11,10 @@ import { languageIcons } from "@typings/languageIcons";
 
 interface ProjectCardProps {
     repo: GitHubRepository;
+    className? : string
 }
 
-export default function ProjectCard({ repo }: ProjectCardProps) {
+export default function ProjectCard({ repo, className }: ProjectCardProps) {
 
     const [languages, setLanguages] = useState<Record<string, number>>({});
 
@@ -33,7 +34,7 @@ export default function ProjectCard({ repo }: ProjectCardProps) {
         .filter(Boolean);
 
     return (
-        <article className="group relative flex flex-col gap-4 p-6 bg-white dark:bg-(--color-dark-surface) rounded-lg border border-(--color-neutral-200) dark:border-(--color-neutral-800) shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+        <article className={`${className} group relative flex flex-col gap-4 p-6 bg-white dark:bg-(--color-dark-surface) rounded-lg border border-(--color-neutral-200) dark:border-(--color-neutral-800) shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1`}>
 
             {/* Header */}
             <div className="flex items-start justify-between gap-3">
@@ -45,7 +46,7 @@ export default function ProjectCard({ repo }: ProjectCardProps) {
                         document.location.href = `/en-GB/${repo.name}`;
                     }
                 }}>
-                    <h3 className="text-xl font-semibold text-(--color-neutral-900) dark:text-(--color-neutral-100) group-hover:text-(--color-primary) transition-colors duration-200">
+                    <h3 className="text-xl py-0 font-semibold text-(--color-neutral-900) dark:text-(--color-neutral-100) group-hover:text-(--color-primary) transition-colors duration-200 line-clamp-1 grow">
                         {repo.name}
                     </h3>
                 </SecondaryButton>

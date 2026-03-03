@@ -53,10 +53,10 @@ export const FavoriteProjects = ({ favoriteNames }: FavoriteProjectsProps) => {
     }
 
     return (
-        <div className="w-full h-54 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+        <div className="w-full grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 place-items-center">
             {filtered.map((repo) => (
                 <div key={repo.id}>
-                    <ProjectCard repo={repo} />
+                    <ProjectCard className='max-h-50' repo={repo} />
                 </div>
             ))}
         </div>
