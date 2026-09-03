@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import ProjectCard from '../atoms/cards/ProjectCard';
-import type { GitHubRepository } from '@typings/Github';
+import React, { useEffect, useState } from "react";
+import ProjectCard from "../atoms/cards/ProjectCard";
+import type { GitHubRepository } from "@typings/github";
 
 type Props = {
   initialRepos?: GitHubRepository[];
@@ -16,12 +16,13 @@ export default function ListProjectsClient({ initialRepos = [] }: Props) {
       }
     };
 
-    window.addEventListener('repos-updated', handler as EventListener);
-    return () => window.removeEventListener('repos-updated', handler as EventListener);
+    window.addEventListener("repos-updated", handler as EventListener);
+    return () =>
+      window.removeEventListener("repos-updated", handler as EventListener);
   }, []);
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
       {repos.map((repo) => (
         <ProjectCard key={repo.name} repo={repo} />
       ))}

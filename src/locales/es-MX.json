@@ -10,5 +10,13 @@
   "about.title": "Acerca de mi",
   "about.description": "Desarrollador Full-Stack | Apasionado por los Microservicios y Soluciones Escalables: Soy un Desarrollador Full-Stack enfocado en construir productos digitales eficientes y seguros. Mi mayor logro técnico fue el desarrollo de un Dashboard basado en roles (RBAC) utilizando una arquitectura de microservicios, lo que permitió una mejor gestión de datos y seguridad del sistema.Cuento con experiencia en un stack tecnológico diverso que incluye Java, PHP, C# y JavaScript, trabajando con frameworks como React, Angular y Laravel. Disfruto resolver problemas complejos usando metodologías Ágiles (Scrum) e integrando herramientas de IA para optimizar los flujos de desarrollo. Actualmente busco mi próximo reto como Junior Full-Stack Developer para contribuir en proyectos innovadores y seguir creciendo profesionalmente.",
 
-  "contact.title": "Puedes contactarme con LikendIn, WhatsApp o un email"
+  "contact.title": "Puedes contactarme con LikendIn, WhatsApp o un email",
+
+  "deploy.label": "Ver sitio",
+  "repo.description": "Descripción",
+  "repo.stars": "Estrellas",
+  "repo.language": "Tecnología principal",
+  "repo.github": "Ver en GitHub",
+  "repo.noDescription": "Este repositorio no tiene descripción.",
+  "repo.noDeploy": "Este repositorio no tiene un deploy disponible."
 }

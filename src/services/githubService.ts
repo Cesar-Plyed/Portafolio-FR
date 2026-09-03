@@ -1,4 +1,5 @@
-import type { GitHubRepository } from "../types/Github";
+import type { GitHubDeploymentStatus } from "@typings/github";
+import type { GitHubRepository } from "../types/github";
 
 // Helper function to handle potential errors
 export function getErrorMessage(error: unknown): string {
@@ -73,6 +74,62 @@ export const fetchRepositoryLanguages = async (
 
     const data: Record<string, number> = await response.json();
     return data;
+
+  } catch (error) {
+    return new Error(getErrorMessage(error));
+  }
+};
+
+export const fetchLatestDeploymentUrl = async (
+  username: string,
+  repo: string
+): Promise<string | null | Error> => {
+  const deployment = await fetchLatestDeploymentStatus(username, repo);
+  if (deployment instanceof Error || deployment === null) {
+    return deployment;
+  }
+
+  return deployment.environment_url || deployment.target_url || null;
+};
+
+export const fetchLatestDeploymentStatus = async (
+  username: string,
+  repo: string
+): Promise<GitHubDeploymentStatus | null | Error> => {
+  try {
+    const deploymentsUrl = `https://api.github.com/repos/${username}/${repo}/deployments`;
+    const response = await fetch(deploymentsUrl, { headers: makeGitHubHeaders() });
+
+    if (!response.ok) {
+      let msg = `GitHub API responded with status: ${response.status}`;
+      if (response.status === 403) {
+        try {
+          const body = await response.json();
+          msg += ` – ${body?.message || 'forbidden'}`;
+        } catch {}
+      }
+      throw new Error(msg);
+    }
+
+    const deployments = await response.json();
+    if (!Array.isArray(deployments) || deployments.length === 0) {
+      return null; 
+    }
+
+    const latestDeployment = deployments[0];
+    const statusesUrl = latestDeployment.statuses_url;
+
+    const statusResponse = await fetch(statusesUrl, { headers: makeGitHubHeaders() });
+
+    if (!statusResponse.ok) {
+      throw new Error(`GitHub API responded with status: ${statusResponse.status}`);
+    }
+
+    const statuses: GitHubDeploymentStatus[] = await statusResponse.json();
+
+    const currentStatus = statuses.find(s => s.environment_url || s.target_url);
+
+    return currentStatus || null;
 
   } catch (error) {
     return new Error(getErrorMessage(error));

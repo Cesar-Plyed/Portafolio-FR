@@ -1,6 +1,6 @@
 import { type ButtonHTMLAttributes, type AnchorHTMLAttributes, type ReactNode, useState } from 'react';
 import SecondaryButton from './SecondaryButton';
-import { fetchRepositories } from 'src/services/githubService';
+import { fetchRepositories } from '@service/githubService';
 
 type BaseProps = {
   children?: ReactNode;

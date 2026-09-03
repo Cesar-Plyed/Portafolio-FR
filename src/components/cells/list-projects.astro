@@ -1,45 +1,43 @@
 ---
 import ListProjectsClient from "./ListProjectsClient";
 import UpdateRepositoryes from "../atoms/buttons/UpdateRepositoryes";
-import { fetchRepositories } from "@service/githubService";
-import type { GitHubRepository } from "@typings/Github";
+import type { GitHubRepository } from "@typings/github";
 
 //laguage
 import en from "../../locales/en-GB.json";
 import es from "../../locales/es-MX.json";
 
-// Fetch repositories from GitHub and display them
-const repositories = await fetchRepositories("Cesar-Plyed");
-const repos: GitHubRepository[] = repositories as GitHubRepository[];
-
-interface Props {}
+interface Props {
+  initialRepos?: GitHubRepository[];
+}
 
 export async function getStaticPaths() {
-    return [{ params: { lang: "en-GB" } }, { params: { lang: "es-MX" } }];
+  return [{ params: { lang: "en-GB" } }, { params: { lang: "es-MX" } }];
 }
 
 const { lang } = Astro.params;
 const i18n = lang === "es-MX" ? es : en;
+const { initialRepos = [] } = Astro.props;
 
 const title2 = i18n.home.title2;
 ---
 
 <div class="w-full">
-    {
-        repos.length > 0 ? (
-            <section class="space-y-6">
-                <h2 class="text-3xl font-bold text-(--color-neutral-900) dark:text-(--color-neutral-100)">
-                    GitHub {title2}
-                </h2>
-                <div class="flex items-center justify-between">
-                    <UpdateRepositoryes client:load />
-                </div>
-                <ListProjectsClient client:load initialRepos={repos} />
-            </section>
-        ) : (
-            <p class="text-(--color-neutral-600) dark:text-(--color-neutral-400)">
-                No repositories found.
-            </p>
-        )
-    }
+  {
+    initialRepos.length > 0 ? (
+      <section class="space-y-6">
+        <h2 class="text-3xl font-bold text-(--color-neutral-900) dark:text-(--color-neutral-100)">
+          GitHub {title2}
+        </h2>
+        <div class="flex items-center justify-between">
+          <UpdateRepositoryes client:load />
+        </div>
+        <ListProjectsClient client:load initialRepos={initialRepos} />
+      </section>
+    ) : (
+      <p class="text-(--color-neutral-600) dark:text-(--color-neutral-400)">
+        No repositories found.
+      </p>
+    )
+  }
 </div>
